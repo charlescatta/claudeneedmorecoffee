@@ -8,7 +8,7 @@ allowed-tools: Bash(sudo -n /usr/bin/pmset*)
 You are setting up **true clamshell mode** for the `claudeneedmorecoffee` plugin. This lets the
 Mac stay awake with the lid closed (on battery) while Claude works, by authorizing the user to
 run `pmset -a disablesleep` without a password. Without this, the plugin still works but degrades
-to `caffeinate`-only (awake with lid open, or closed only on external power/display).
+to `caffeinate`-only (awake with the lid open, or closed only on external power/display).
 
 Follow these steps exactly:
 
@@ -19,24 +19,28 @@ Follow these steps exactly:
    - If the output is `ENABLED`: tell the user true clamshell mode is **already set up** — nothing
      to do — and stop here.
 
-2. **If `NOT_ENABLED`,** the setup script needs an interactive sudo password, which I (Claude)
-   cannot provide — my shell is non-interactive. So hand it to the user to run themselves.
-   - The installer lives at `$CLAUDE_PLUGIN_ROOT/scripts/install-sudoers.sh`. Resolve that to a
-     concrete absolute path (echo `$CLAUDE_PLUGIN_ROOT` if needed).
-   - Then tell the user to paste this line **into their next prompt** (the leading `!` runs it in
-     their terminal, where the password prompt works):
+2. **If `NOT_ENABLED`,** this needs an interactive `sudo` password. I cannot provide it — neither
+   my Bash tool nor the `!` prompt-prefix has a real terminal, so `sudo` can't ask for a password
+   there. The user must run it in a **normal terminal app**.
 
-     ```
-     ! sudo /absolute/path/to/scripts/install-sudoers.sh
-     ```
+   Tell the user to **open Terminal.app / iTerm (a real terminal — NOT here, NOT with `!`)** and
+   paste this block **once**:
 
-     Substitute the real absolute path. Explain it will ask for their **login password once** and
-     write `/etc/sudoers.d/claudeneedmorecoffee` (validated with `visudo`). They can undo it later
-     with `sudo rm /etc/sudoers.d/claudeneedmorecoffee`.
+   ```bash
+   sudo tee /etc/sudoers.d/claudeneedmorecoffee >/dev/null <<EOF
+   $(id -un) ALL=(root) NOPASSWD: /usr/bin/pmset -a disablesleep 0, /usr/bin/pmset -a disablesleep 1
+   EOF
+   sudo chmod 440 /etc/sudoers.d/claudeneedmorecoffee
+   ```
 
-3. **After the user runs it,** re-run the check from step 1.
+   Explain: it asks for their **login password once** and writes
+   `/etc/sudoers.d/claudeneedmorecoffee`, authorizing exactly the two `pmset` commands the plugin
+   uses. This is a **one-time** setup — it **never needs re-running, including after plugin
+   updates**. They can undo it anytime with `sudo rm /etc/sudoers.d/claudeneedmorecoffee`.
+
+3. **After the user says they've run it,** re-run the check from step 1.
    - `ENABLED` → confirm true clamshell mode is now active; it takes effect on the next prompt.
-   - still `NOT_ENABLED` → report that setup didn't complete and the plugin will use
-     caffeinate-only until it's fixed; offer to show the installer's output.
+   - still `NOT_ENABLED` → report that setup didn't complete; the plugin will use caffeinate-only
+     until it's fixed.
 
-Keep your messages short and concrete. Always show the exact command the user must paste.
+Keep your messages short and concrete. Always show the exact block the user must paste.

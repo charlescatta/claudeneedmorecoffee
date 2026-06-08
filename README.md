@@ -43,19 +43,23 @@ single-plugin marketplace named `cc`.)
 
 ### 2. (Optional) Enable true clamshell mode
 
-To stay awake with the lid **closed on battery**, authorize passwordless `pmset` once. The
-easiest way is the bundled command — run it inside Claude Code and follow the prompt:
-
-```text
-/claudeneedmorecoffee:enable-clamshell
-```
-
-It checks whether setup is needed and, if so, hands you the exact one-time `sudo` line to run.
-Prefer doing it by hand? Run the installer directly:
+To stay awake with the lid **closed on battery**, authorize passwordless `pmset` once. Run this
+**in a real terminal** (Terminal.app / iTerm — `sudo` needs a real terminal to ask for your
+password):
 
 ```bash
-sudo ./scripts/install-sudoers.sh
+sudo tee /etc/sudoers.d/claudeneedmorecoffee >/dev/null <<EOF
+$(id -un) ALL=(root) NOPASSWD: /usr/bin/pmset -a disablesleep 0, /usr/bin/pmset -a disablesleep 1
+EOF
+sudo chmod 440 /etc/sudoers.d/claudeneedmorecoffee
 ```
+
+It asks for your login password once and authorizes exactly the two `pmset` commands the plugin
+uses. This is **one-time** — it never needs re-running, including after plugin updates. Undo it
+with `sudo rm /etc/sudoers.d/claudeneedmorecoffee`.
+
+Not sure if it's set up? Run `/claudeneedmorecoffee:enable-clamshell` inside Claude Code — it
+checks and, if needed, hands you the block above.
 
 Skip this entirely and everything still works — just caffeinate-only (awake with the lid open,
 or closed on external power/display).

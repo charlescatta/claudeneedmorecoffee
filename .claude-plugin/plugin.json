@@ -1,7 +1,7 @@
 {
   "name": "claudeneedmorecoffee",
   "description": "Keeps your Mac awake while Claude is working; sleeps when it's done.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": { "name": "Charles Catta", "email": "charles@toyo.ai" },
   "license": "MIT",
   "repository": "https://github.com/charlescatta/claudeneedmorecoffee",

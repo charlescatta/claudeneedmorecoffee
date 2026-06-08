@@ -19,9 +19,10 @@ if ! pgrep -f "caffeinate -dimsu" >/dev/null 2>&1; then
   nohup caffeinate -dimsu >/dev/null 2>&1 &
 fi
 
-# Suspenders: true clamshell (lid closed) needs root. Only works if the
-# passwordless-sudo entry from scripts/install-sudoers.sh is installed;
-# otherwise this silently no-ops and we degrade to caffeinate-only.
+# Suspenders: true clamshell (lid closed) needs root. Only works if the user
+# ran the one-time passwordless-sudo setup (/etc/sudoers.d/claudeneedmorecoffee,
+# see /claudeneedmorecoffee:enable-clamshell); otherwise this silently no-ops
+# and we degrade to caffeinate-only.
 sudo -n /usr/bin/pmset -a disablesleep 1 >/dev/null 2>&1 || true
 
 exit 0
