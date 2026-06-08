@@ -1,0 +1,11 @@
+{
+  "name": "claudeneedmorecoffee",
+  "description": "Keeps your Mac awake while Claude is working; sleeps when it's done.",
+  "version": "1.0.0",
+  "author": { "name": "Charles Catta", "email": "charles@toyo.ai" },
+  "license": "MIT",
+  "repository": "https://github.com/charlescatta/claudeneedmorecoffee",
+  "homepage": "https://github.com/charlescatta/claudeneedmorecoffee#readme",
+  "keywords": ["caffeinate", "sleep", "clamshell", "macos", "hooks"],
+  "hooks": "./hooks/hooks.json"
+}

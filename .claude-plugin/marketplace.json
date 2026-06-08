@@ -1,0 +1,11 @@
+{
+  "name": "coffee",
+  "owner": { "name": "Charles Catta" },
+  "plugins": [
+    {
+      "name": "claudeneedmorecoffee",
+      "source": "./",
+      "description": "Keeps your Mac awake while Claude is working; sleeps when it's done."
+    }
+  ]
+}
