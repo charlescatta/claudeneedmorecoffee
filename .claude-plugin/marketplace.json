@@ -1,6 +1,9 @@
 {
   "name": "coffee",
   "owner": { "name": "Charles Catta" },
+  "metadata": {
+    "description": "Coffee for Claude — plugins that keep your Mac awake while Claude works."
+  },
   "plugins": [
     {
       "name": "claudeneedmorecoffee",
