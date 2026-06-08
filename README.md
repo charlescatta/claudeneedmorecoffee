@@ -32,11 +32,11 @@ working.
 
 ```text
 /plugin marketplace add charlescatta/claudeneedmorecoffee
-/plugin install claudeneedmorecoffee@coffee
+/plugin install claudeneedmorecoffee@cc
 ```
 
 That's it — the hooks are active on your next prompt. (The repo is both a plugin and a
-single-plugin marketplace named `coffee`.)
+single-plugin marketplace named `cc`.)
 
 > **Local / dev install** instead: clone the repo and launch with
 > `claude --plugin-dir /path/to/claudeneedmorecoffee`.

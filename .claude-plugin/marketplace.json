@@ -1,8 +1,8 @@
 {
-  "name": "coffee",
-  "owner": { "name": "Charles Catta" },
+  "name": "cc",
+  "owner": { "name": "Charles Catta", "url": "https://github.com/charlescatta" },
   "metadata": {
-    "description": "Coffee for Claude — plugins that keep your Mac awake while Claude works."
+    "description": "charlescatta's Claude Code plugins."
   },
   "plugins": [
     {
